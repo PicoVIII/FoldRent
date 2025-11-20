@@ -1,13 +1,16 @@
 package com.foldrent.database;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import tools.jackson.core.exc.StreamWriteException;
+import tools.jackson.databind.DatabindException;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.SerializationFeature;
+import tools.jackson.databind.cfg.DateTimeFeature;
+import tools.jackson.databind.json.JsonMapper;
+
 import com.foldrent.models.Tenants;
 import com.foldrent.models.Payment;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +21,10 @@ public class JsonDatabase {
     private final String PAYMENTS_FILE = DATA_DIR + "/payments.json";
 
     public JsonDatabase() {
-        this.objectMapper = new ObjectMapper();
-        // Configure ObjectMapper to work with Java 8 dates and pretty print
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        this.objectMapper = JsonMapper.builder() 
+        .enable(SerializationFeature.INDENT_OUTPUT)
+        .disable(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS)
+        .build();
         
         ensureDataDirectoryExists();
     }
@@ -39,7 +41,7 @@ public class JsonDatabase {
         try {
             objectMapper.writeValue(new File(TENANTS_FILE), tenants);
             System.out.println("Tenants saved successfully to " + TENANTS_FILE);
-        } catch (IOException e) {
+        } catch (StreamWriteException | DatabindException e) {
             System.out.println("Error saving tenants: " + e.getMessage());
         }
     }
@@ -51,7 +53,7 @@ public class JsonDatabase {
             if (file.exists()) {
                 return objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, Tenants.class));
             }
-        } catch (IOException e) {
+        } catch (StreamWriteException | DatabindException e) {
             System.out.println("Error loading tenants: " + e.getMessage());
         }
         return new ArrayList<>(); // Return empty list if file doesn't exist or error
@@ -62,7 +64,7 @@ public class JsonDatabase {
         try {
             objectMapper.writeValue(new File(PAYMENTS_FILE), payments);
             System.out.println("Payments saved successfully to " + PAYMENTS_FILE);
-        } catch (IOException e) {
+        } catch (StreamWriteException | DatabindException e) {
             System.out.println("Error saving payments: " + e.getMessage());
         }
     }
@@ -74,7 +76,7 @@ public class JsonDatabase {
             if (file.exists()) {
                 return objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, Payment.class));
             }
-        } catch (IOException e) {
+        } catch (StreamWriteException | DatabindException e) {
             System.out.println("Error loading payments: " + e.getMessage());
         }
         return new ArrayList<>(); // Return empty list if file doesn't exist or error
