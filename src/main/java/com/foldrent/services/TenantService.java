@@ -87,7 +87,7 @@ public class TenantService {
         return null; //not found
     }
 
-    private boolean saveData(){
+    public boolean saveData(){
         try {
             database.saveTenants(tenants);
             return true;

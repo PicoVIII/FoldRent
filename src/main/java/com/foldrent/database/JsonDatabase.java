@@ -8,6 +8,7 @@ import tools.jackson.databind.cfg.DateTimeFeature;
 import tools.jackson.databind.json.JsonMapper;
 
 import com.foldrent.models.Tenants;
+import com.foldrent.models.User;
 import com.foldrent.models.Payment;
 
 import java.io.File;
@@ -19,6 +20,7 @@ public class JsonDatabase {
     private final String DATA_DIR = "data";
     private final String TENANTS_FILE = DATA_DIR + "/tenants.json";
     private final String PAYMENTS_FILE = DATA_DIR + "/payments.json";
+    private final String USERS_FILE = DATA_DIR + "/users.json";
 
     public JsonDatabase() {
         this.objectMapper = JsonMapper.builder() 
@@ -80,5 +82,26 @@ public class JsonDatabase {
             System.out.println("Error loading payments: " + e.getMessage());
         }
         return new ArrayList<>(); // Return empty list if file doesn't exist or error
+    }
+
+    public List<User> loadUsers(){
+        try {
+            File file = new File(USERS_FILE);
+            if (file.exists()) {
+                return objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, User.class));
+            }
+        } catch (StreamWriteException | DatabindException e) {
+            System.out.println("Error loading Users: " + e.getMessage());
+        }
+        return new ArrayList<>(); // Return empty list if file doesn't exist or error
+    }
+
+    public void saveUsers(List<User> users){
+        try {
+            objectMapper.writeValue(new File(USERS_FILE), users);
+            System.out.println("User saved successfully to " + USERS_FILE);
+        } catch (Exception e) {
+            System.out.println("Error saving user: " + e.getMessage());
+        }
     }
 }
