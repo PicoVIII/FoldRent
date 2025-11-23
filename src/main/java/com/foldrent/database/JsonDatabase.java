@@ -9,6 +9,7 @@ import tools.jackson.databind.json.JsonMapper;
 
 import com.foldrent.models.Tenants;
 import com.foldrent.models.User;
+import com.foldrent.models.Landlords;
 import com.foldrent.models.Payment;
 
 import java.io.File;
@@ -19,15 +20,16 @@ public class JsonDatabase {
     private final ObjectMapper objectMapper;
     private final String DATA_DIR = "data";
     private final String TENANTS_FILE = DATA_DIR + "/tenants.json";
+    private final String LANDLORDS_FILE = DATA_DIR + "/landlords.json";
     private final String PAYMENTS_FILE = DATA_DIR + "/payments.json";
     private final String USERS_FILE = DATA_DIR + "/users.json";
 
     public JsonDatabase() {
-        this.objectMapper = JsonMapper.builder() 
-        .enable(SerializationFeature.INDENT_OUTPUT)
-        .disable(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS)
-        .build();
-        
+        this.objectMapper = JsonMapper.builder()
+                .enable(SerializationFeature.INDENT_OUTPUT)
+                .disable(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS)
+                .build();
+
         ensureDataDirectoryExists();
     }
 
@@ -53,10 +55,34 @@ public class JsonDatabase {
         try {
             File file = new File(TENANTS_FILE);
             if (file.exists()) {
-                return objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, Tenants.class));
+                return objectMapper.readValue(file,
+                        objectMapper.getTypeFactory().constructCollectionType(List.class, Tenants.class));
             }
         } catch (StreamWriteException | DatabindException e) {
             System.out.println("Error loading tenants: " + e.getMessage());
+        }
+        return new ArrayList<>(); // Return empty list if file doesn't exist or error
+    }
+
+    public void saveLandlords(List<Landlords> landlords) {
+        try {
+            objectMapper.writeValue(new File(LANDLORDS_FILE), landlords);
+            System.out.println("Tenants saved successfully to " + LANDLORDS_FILE);
+        } catch (StreamWriteException | DatabindException e) {
+            System.out.println("Error saving Landlords: " + e.getMessage());
+        }
+    }
+
+    // Load tenants from JSON file
+    public List<Landlords> loadLandlords() {
+        try {
+            File file = new File(LANDLORDS_FILE);
+            if (file.exists()) {
+                return objectMapper.readValue(file,
+                        objectMapper.getTypeFactory().constructCollectionType(List.class, Landlords.class));
+            }
+        } catch (StreamWriteException | DatabindException e) {
+            System.out.println("Error loading landlords: " + e.getMessage());
         }
         return new ArrayList<>(); // Return empty list if file doesn't exist or error
     }
@@ -76,7 +102,8 @@ public class JsonDatabase {
         try {
             File file = new File(PAYMENTS_FILE);
             if (file.exists()) {
-                return objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, Payment.class));
+                return objectMapper.readValue(file,
+                        objectMapper.getTypeFactory().constructCollectionType(List.class, Payment.class));
             }
         } catch (StreamWriteException | DatabindException e) {
             System.out.println("Error loading payments: " + e.getMessage());
@@ -84,11 +111,12 @@ public class JsonDatabase {
         return new ArrayList<>(); // Return empty list if file doesn't exist or error
     }
 
-    public List<User> loadUsers(){
+    public List<User> loadUsers() {
         try {
             File file = new File(USERS_FILE);
             if (file.exists()) {
-                return objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, User.class));
+                return objectMapper.readValue(file,
+                        objectMapper.getTypeFactory().constructCollectionType(List.class, User.class));
             }
         } catch (StreamWriteException | DatabindException e) {
             System.out.println("Error loading Users: " + e.getMessage());
@@ -96,7 +124,7 @@ public class JsonDatabase {
         return new ArrayList<>(); // Return empty list if file doesn't exist or error
     }
 
-    public void saveUsers(List<User> users){
+    public void saveUsers(List<User> users) {
         try {
             objectMapper.writeValue(new File(USERS_FILE), users);
             System.out.println("User saved successfully to " + USERS_FILE);

@@ -1,3 +1,17 @@
-[ 
-
-]
+[ {
+  "userId" : 1,
+  "username" : "pico",
+  "password" : "pico",
+  "role" : "LANDLORD",
+  "tenantId" : 0,
+  "landlordId" : 1,
+  "active" : true
+}, {
+  "userId" : 2,
+  "username" : "john",
+  "password" : "doe",
+  "role" : "TENANT",
+  "tenantId" : 1,
+  "landlordId" : 0,
+  "active" : true
+} ]

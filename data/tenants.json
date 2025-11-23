@@ -1,3 +1,15 @@
-[ 
-  
-]
+[ {
+  "tenantID" : 1,
+  "tenantFirstName" : "John",
+  "tenantLastName" : "Doe",
+  "tenantMidInitial" : "F",
+  "tenantEmail" : "johndoe@gmail.com",
+  "tenantRoomNumber" : 0,
+  "rentAmount" : 0.0,
+  "rentBalance" : 0.0,
+  "rentMissed" : 0,
+  "moveInDate" : "2025-11-23",
+  "moveOutDate" : null,
+  "active" : true,
+  "tenantPhoneNumber" : "12312312312"
+} ]

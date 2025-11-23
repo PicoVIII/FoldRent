@@ -1,19 +1,26 @@
 package com.foldrent.models;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({"userId", "username", "password", "role", "tenantId", "landlordId", "active"})
+
 public class User {
     private int userId;
     private String username;
     private String password; // plain text for now
     private String role; // "LANDLORD" or "TENANT"
-    private int tenantId; // if role is TENANT, links to their tenant record
+    private int tenantId; // if role is TENANT, links to their tenant record. null if landlord.
+    private int landlordId; // if role is LANDLORD, null if tenant
     private boolean isActive;
 
-    public User(int userId, String username, String password, String role, int tenantId, boolean isActive) {
+    public User(int userId, String username, String password, String role, int tenantId, int landlordId,
+            boolean isActive) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.role = role;
         this.tenantId = tenantId;
+        this.landlordId = landlordId;
         this.isActive = isActive;
     }
 
@@ -55,6 +62,14 @@ public class User {
 
     public void setTenantId(int tenantId) {
         this.tenantId = tenantId;
+    }
+
+    public int getLandlordId() {
+        return landlordId;
+    }
+
+    public void setLandlordId(int landlordId) {
+        this.landlordId = landlordId;
     }
 
     public boolean isActive() {

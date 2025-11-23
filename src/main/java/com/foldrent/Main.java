@@ -7,11 +7,15 @@ import com.foldrent.models.Tenants;
 import com.foldrent.services.AuthService;
 import com.foldrent.services.TenantService;
 import com.foldrent.services.PaymentService;
+import com.foldrent.services.LandlordService;
+import com.foldrent.services.RegistrationService;
 
 public class Main {
     private static AuthService authService;
     private static TenantService tenantService;
     private static PaymentService paymentService;
+    private static LandlordService landlordService;
+    private static RegistrationService registrationService;
     private static Scanner scanner;
 
     public static void main(String[] args) {
@@ -27,8 +31,10 @@ public class Main {
 
     private static void initializeServices() {
         tenantService = new TenantService();
+        landlordService = new LandlordService();
         authService = new AuthService();
         paymentService = new PaymentService(tenantService);
+        registrationService = new RegistrationService(authService, tenantService, landlordService);
         System.out.println("Services initialized!");
     }
 
@@ -81,60 +87,53 @@ public class Main {
 
     private static void register() {
         System.out.println("\n=== REGISTER ===");
-
-        // Get credentials first
         System.out.print("Username: ");
         String username = scanner.nextLine();
         System.out.print("Password: ");
         String password = scanner.nextLine();
 
-        // Role selection
         System.out.println("Select Role:");
         System.out.println("1. Landlord");
         System.out.println("2. Tenant");
         System.out.print("Choose (1-2): ");
         int roleChoice = scanner.nextInt();
-        scanner.nextLine(); // consume newline
-
-        String role;
-        int tenantId = 0;
+        scanner.nextLine();
 
         if (roleChoice == 1) {
-            role = "LANDLORD";
-            // Register landlord user
-            if (authService.registerUser(username, password, role, tenantId)) {
-                System.out.println("Landlord account created!");
-            }
-
-        } else if (roleChoice == 2) {
-            role = "TENANT";
-
-            // Get tenant personal information
-            System.out.println("\n=== TENANT INFORMATION ===");
+            // GET LANDLORD DETAILS
             System.out.print("First Name: ");
             String firstName = scanner.nextLine();
             System.out.print("Last Name: ");
             String lastName = scanner.nextLine();
-            System.out.print("Monthly Rent: ");
-            double rentAmount = scanner.nextDouble();
-            scanner.nextLine(); // consume newline
+            System.out.print("Middle Initial: ");
+            char midInitial = scanner.nextLine().charAt(0);
+            System.out.print("Email: ");
+            String email = scanner.nextLine();
+            System.out.print("Phone: ");
+            String phone = scanner.nextLine();
 
-            // Create tenant record first
-            if (tenantService.addTenant(firstName, lastName, rentAmount)) {
-                // Get the auto-generated tenant ID
-                List<Tenants> allTenants = tenantService.getActiveTenants();
-                Tenants newTenant = allTenants.get(allTenants.size() - 1); // Get the last added tenant
-                tenantId = newTenant.getTenantID();
+            // CALL REGISTRATION SERVICE
+            boolean success = registrationService.registerLandlord(username, password, firstName, lastName, midInitial,
+                    email,
+                    phone);
+            System.out.println(success ? "Landlord registered!" : "Registration failed!");
 
-                // Register user account linked to tenant
-                if (authService.registerUser(username, password, role, tenantId)) {
-                    System.out.println("Tenant account created successfully!");
-                    System.out.println("Your Tenant ID: " + tenantId);
-                }
-            }
+        } else if (roleChoice == 2) {
+            // GET TENANT DETAILS
+            System.out.print("First Name: ");
+            String firstName = scanner.nextLine();
+            System.out.print("Last Name: ");
+            String lastName = scanner.nextLine();
+            System.out.print("Middle Initial: ");
+            char middleInitial = scanner.nextLine().charAt(0);
+            System.out.print("Email: ");
+            String email = scanner.nextLine();
+            System.out.print("Phone: ");
+            String phone = scanner.nextLine();
 
-        } else {
-            System.out.println("Invalid choice!");
+            // CALL REGISTRATION SERVICE
+            boolean success = registrationService.registerTenant(username, password, firstName, lastName, middleInitial, email, phone);
+            System.out.println(success ? "Tenant registered!" : "Registration failed!");
         }
     }
 }

@@ -30,21 +30,24 @@ public class TenantService {
         }
     }
 
-    public boolean addTenant(String firstName, String lastName, double rentAmount){
-        Tenants newTenant = new Tenants(nextTenantId, firstName, lastName, rentAmount);
+    public int addTenant(String firstName, String lastName, char middleInitial, String email, String phone){
+        Tenants newTenant = new Tenants(nextTenantId, firstName, lastName, middleInitial, email, phone);
         tenants.add(newTenant);
+        int createdId = nextTenantId;
         nextTenantId++;
-        return saveData();
+        saveData();
+        return createdId;
     }
 
     public boolean updateTenant(int id, String firstName, 
-                                String lastName, double rentAmount){
+                                String lastName, char middleInitial, String email, int phone, double rentAmount, int roomNumber){
         Tenants tenant = findTenantById(id);
 
         if (tenant != null){
             tenant.setTenantFirstName(firstName);
             tenant.setTenantLastName(lastName);
             tenant.setRentAmount(rentAmount);
+            tenant.setTenantRoomNumber(roomNumber);
 
             return saveData();
         }
@@ -58,7 +61,7 @@ public class TenantService {
             //soft delete (wont fully delete the tenant)
             tenant.setActive(false);
             tenant.setMoveOutDate(LocalDate.now());
-
+            tenant.setTenantRoomNumber(0);
             //save changes
             return saveData();
         }

@@ -33,8 +33,8 @@ public class AuthService {
         }
     }
 
-    public boolean registerUser(String username, String password, String role, int tenantId) {
-        //validate role
+    public boolean registerUser(String username, String password, String role, int tenantId, int landlordId) {
+        // validate role
         if (!role.equals("LANDLORD") && !role.equals("TENANT")) {
             return false; // Invalid role
         }
@@ -47,10 +47,42 @@ public class AuthService {
             }
         }
 
-        User newUser = new User(nextUserId, username, password, role, tenantId, true);
+        User newUser = new User(nextUserId, username, password, role, tenantId, landlordId, true);
         users.add(newUser);
         nextUserId++;
         return saveData();
+    }
+
+    public Integer getCurrentUserLandlordId() {
+        if (currentUser != null) {
+            return currentUser.getLandlordId();
+        }
+        return null;
+    }
+
+    public Integer getCurrentUserTenantId() {
+        if (currentUser != null) {
+            return currentUser.getTenantId();
+        }
+        return null;
+    }
+
+    public User findUserByLandlordId(int landlordId) {
+        for (User user : users) {
+            if (user.getLandlordId() == landlordId) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public User findUserByTenantId(int tenantId) {
+        for (User user : users) {
+            if (user.getTenantId() == tenantId) {
+                return user;
+            }
+        }
+        return null;
     }
 
     public boolean loginUser(String username, String password) {
