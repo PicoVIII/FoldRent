@@ -3,6 +3,8 @@ package com.foldrent.services;
 import com.foldrent.models.Landlords;
 import com.foldrent.models.Tenants;
 
+import java.time.LocalDate;
+
 public class RegistrationService {
     private AuthService authService;
     private TenantService tenantService;
@@ -25,8 +27,8 @@ public class RegistrationService {
          }
 
     public boolean registerTenant(String username, String password, String firstName,
-         String lastName, char middleInitial, String email, String phone){
-            int tenantId = tenantService.addTenant(firstName, lastName, middleInitial, email, phone);
+         String lastName, char middleInitial, char gender, LocalDate birthDate, String email, String phone){
+            int tenantId = tenantService.addTenant(firstName, lastName, middleInitial, gender, birthDate, email, phone);
             if(tenantId <= 0){
                 return false; //failed to add tenant
             }

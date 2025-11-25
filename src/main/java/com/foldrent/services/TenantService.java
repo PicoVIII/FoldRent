@@ -30,8 +30,8 @@ public class TenantService {
         }
     }
 
-    public int addTenant(String firstName, String lastName, char middleInitial, String email, String phone){
-        Tenants newTenant = new Tenants(nextTenantId, firstName, lastName, middleInitial, email, phone);
+    public int addTenant(String firstName, String lastName, char middleInitial, char gender, LocalDate birthDate, String email, String phone){
+        Tenants newTenant = new Tenants(nextTenantId, firstName, lastName, middleInitial, gender, birthDate, email, phone);
         tenants.add(newTenant);
         int createdId = nextTenantId;
         nextTenantId++;

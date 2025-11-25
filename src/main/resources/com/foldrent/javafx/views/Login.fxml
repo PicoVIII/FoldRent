@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foldrent.javafx.controllers.LoginController">
+   <children>
+      <TextField id="usernameField" layoutX="245.0" layoutY="202.0" prefHeight="25.0" prefWidth="231.0" promptText="username" />
+      <PasswordField id="passwordField" layoutX="245.0" layoutY="262.0" prefHeight="25.0" prefWidth="231.0" promptText="Password" />
+      <Text id="rentfold" layoutX="253.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FoldRent" textAlignment="CENTER" wrappingWidth="214.173828125">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Text>
+      <Text layoutX="271.0" layoutY="375.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account? " />
+      <Text id="usernameLabel" layoutX="245.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
+      <Text id="passwordLabel" layoutX="247.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+      <Button id="loginButton" layoutX="316.0" layoutY="323.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Login" />
+      <Hyperlink fx:id="registerButton" layoutX="398.0" layoutY="359.0" text="Register" onAction="#handleRegisterButton" />
+   </children>
+</AnchorPane>
+

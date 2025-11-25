@@ -4,13 +4,15 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"tenantID", "tenantFirstName", "tenantLastName", "tenantMidInitial", "tenantEmail", "tenantPhone", "tenantRoomNumber", "rentAmount", "rentBalance", "rentMissed", "moveInDate", "moveOutDate", "active"})
+@JsonPropertyOrder({"tenantID", "tenantFirstName", "tenantLastName", "tenantMidInitial", "tenantBirthDate", "tenantEmail", "tenantPhone", "tenantRoomNumber", "rentAmount", "rentBalance", "rentMissed", "moveInDate", "moveOutDate", "active"})
 
 public class Tenants {
     private int tenantID;
     private String tenantFirstName;
     private String tenantLastName;
     private char tenantMidInitial;
+    private char tenantGender;
+    private LocalDate tenantBirthDate;
     private String tenantEmail;
     private String tenantPhone;
     private int tenantRoomNumber;
@@ -21,11 +23,13 @@ public class Tenants {
     private LocalDate moveOutDate;
     private boolean isActive;
 
-    public Tenants(int id, String firstName, String lastName, char middleInitial, String email, String phoneNumber) {
+    public Tenants(int id, String firstName, String lastName, char middleInitial, char gender, LocalDate birthDate, String email, String phoneNumber) {
         this.tenantID = id;
         this.tenantFirstName = firstName;
         this.tenantLastName = lastName;
         this.tenantMidInitial = middleInitial;
+        this.tenantBirthDate = birthDate;
+        this.tenantGender = gender;
         this.tenantEmail = email;
         this.tenantPhone = phoneNumber;
         this.tenantRoomNumber = 0; // set to 0 by default, landlord will assign later.
@@ -66,6 +70,14 @@ public class Tenants {
 
     public void setTenantMidInitial(char tenantMidInitial) {
         this.tenantMidInitial = tenantMidInitial;
+    }
+
+    public LocalDate getTenantBirthDate() {
+        return tenantBirthDate;
+    }
+
+    public void setTenantBirthDate(LocalDate tenantBirthDate) {
+        this.tenantBirthDate = tenantBirthDate;
     }
 
     public String getTenantEmail() {
