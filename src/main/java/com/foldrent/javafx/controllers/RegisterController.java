@@ -8,6 +8,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.RadioButton;
 
 public class RegisterController {
 
@@ -15,30 +16,29 @@ public class RegisterController {
     @FXML private TextField passwordField;
     @FXML private Button proceedButton;
     @FXML private Hyperlink loginButton;
-    @FXML private ComboBox<String> roleDropdown;
-
-    @FXML
-    private void initialize() {
-        // Set up the role dropdown options
-        ObservableList<String> roles = FXCollections.observableArrayList(
-            "Tenant",
-            "Landlord"
-        );
-        roleDropdown.setItems(roles);
-        roleDropdown.setValue("Tenant"); // Set default value
-    }
+    @FXML private RadioButton tenantButton;
+    @FXML private RadioButton landlordButton;
 
     @FXML
     private void handleProceed() {
-        String selectedRole = roleDropdown.getValue();
-        System.out.println("Proceed button clicked - Selected role: " + selectedRole);
-        showAlert("Proceed", "Selected role: " + selectedRole + "\nAccount creation coming soon!");
+        //String selectedRole = roleDropdown.getValue();
+        //System.out.println("Proceed button clicked - Selected role: " + selectedRole);
+        //showAlert("Proceed", "Selected role: " + selectedRole + "\nAccount creation coming soon!");
     }
 
     @FXML
-    private void handleLoginLink() {
+    private void handleLoginButton() {
         System.out.println("Login link clicked");
         showAlert("Login", "Redirecting to login...");
+    }
+
+    @FXML
+    private void handleTenantRadio(){
+
+    }
+    @FXML
+    private void handleLandlordRadio(){
+
     }
 
     private void showAlert(String title, String message) {

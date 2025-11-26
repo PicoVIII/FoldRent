@@ -8,11 +8,11 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/com/foldrent/javafx/views/Login.fxml"));
-        primaryStage.setTitle("FoldRent");
-        primaryStage.setScene(new Scene(root, 720, 480));
-        primaryStage.show();
+        stage.setTitle("FoldRent");
+        stage.setScene(new Scene(root, 720, 480));
+        stage.show();
     }
 
     public static void main(String[] args) {

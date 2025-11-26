@@ -7,6 +7,9 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
 
 public class TenantRegistrationController {
 
@@ -21,11 +24,14 @@ public class TenantRegistrationController {
     @FXML private Button registerButton;
     @FXML private Hyperlink loginButton;
     @FXML private Button backButton;
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
 
     @FXML
     private void handleRegister() {
-        System.out.println("Register button clicked");
-        showAlert("Register", "Tenant registration coming soon!");
+        
     }
 
     @FXML
