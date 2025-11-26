@@ -11,7 +11,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foldrent.javafx.controllers.RegisterController">
    <children>
-      <Text fx:id="rentfold" layoutX="253.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FoldRent" textAlignment="CENTER" wrappingWidth="214.173828125">
+      <Text fx:id="rentfold" layoutX="245.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FoldRent" textAlignment="CENTER" wrappingWidth="231.0">
          <font>
             <Font size="34.0" />
          </font>

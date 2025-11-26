@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 
+import javafx.event.ActionEvent;
+
 public class TenantRegistrationController {
 
     @FXML private TextField middleinitialField;

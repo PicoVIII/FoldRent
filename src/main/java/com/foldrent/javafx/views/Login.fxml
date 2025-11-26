@@ -13,7 +13,7 @@
    <children>
       <TextField id="usernameField" fx:id="usernameField" layoutX="245.0" layoutY="202.0" prefHeight="25.0" prefWidth="231.0" promptText="username" />
       <PasswordField id="passwordField" fx:id="passwordField" layoutX="245.0" layoutY="262.0" prefHeight="25.0" prefWidth="231.0" promptText="Password" />
-      <Text fx:id="rentfold" layoutX="253.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FoldRent" textAlignment="CENTER" wrappingWidth="214.173828125">
+      <Text fx:id="rentfold" layoutX="242.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FoldRent" textAlignment="CENTER" wrappingWidth="239.0">
          <font>
             <Font size="34.0" />
          </font>
